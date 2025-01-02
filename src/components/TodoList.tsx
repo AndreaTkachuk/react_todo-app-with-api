@@ -6,7 +6,7 @@ type Props = {
   filteredTodos: Todo[];
   setError: (message: string) => void;
   loading: number | null;
-  deleteTodo: (id: number) => void;
+  deleteTodo: (id: number) => Promise<void> | void;
   updateTodoCheck: (id: number) => void;
   updateTodoTitle: (id: number, value: string) => Promise<void> | void;
   tempTodo: Todo | null;

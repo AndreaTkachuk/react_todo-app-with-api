@@ -140,14 +140,19 @@ export const App: React.FC = () => {
       });
   }
 
-  const deleteTodo = (id: number) => {
+  function deleteTodo(id: number): Promise<void> | void {
     setLoading(id);
 
     removeTodo(id)
-      .then(() => setTodos(todos.filter(item => item.id !== id)))
-      .catch(() => showError('Unable to delete a todo'))
-      .finally(() => setLoading(0));
-  };
+      .then(() => {
+        setTodos(todos.filter(item => item.id !== id));
+        setLoading(0);
+      })
+      .catch(() => {
+        showError('Unable to delete a todo');
+        setLoading(0);
+      });
+  }
 
   const clearCompleted = () => {
     const todosCompleted = todos.filter(todo => todo.completed);

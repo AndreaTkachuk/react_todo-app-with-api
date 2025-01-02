@@ -6,7 +6,7 @@ type Props = {
   todo: Todo;
   setError: (message: string) => void;
   loading: number | null;
-  deleteTodo: (id: number) => void;
+  deleteTodo: (id: number) => Promise<void> | void;
   updateTodoCheck: (id: number) => void;
   updateTodoTitle: (id: number, value: string) => Promise<void> | void;
   isEditingId: number | null;
@@ -37,7 +37,11 @@ export const TodoItem: React.FC<Props> = ({
 
   const handleSubmit = () => {
     if (title.trim() === '') {
-      deleteTodo(todo.id);
+      deleteTodo(todo.id)
+        ?.then(() => setIsEditingId(null))
+        .catch(() => {
+          setIsEditingId(todo.id);
+        });
     }
 
     updateTodoTitle(todo.id, title.trim())
