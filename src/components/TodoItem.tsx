@@ -30,9 +30,9 @@ export const TodoItem: React.FC<Props> = ({
     setError('');
   };
 
-  const handleDoubleClick = (objTodo: Todo) => {
-    setIsEditingId(objTodo.id);
-    setTitle(objTodo.title);
+  const handleDoubleClick = (id: number, value: string) => {
+    setIsEditingId(id);
+    setTitle(value);
   };
 
   const handleSubmit = () => {
@@ -110,7 +110,11 @@ export const TodoItem: React.FC<Props> = ({
         <span
           data-cy="TodoTitle"
           className="todo__title"
-          onDoubleClick={() => handleDoubleClick({ ...todo })}
+          onDoubleClick={() => {
+            const { id, title: todoTitle } = todo;
+
+            handleDoubleClick(id, todoTitle);
+          }}
         >
           {todo.title}
         </span>

@@ -5,8 +5,8 @@ import { Filter } from '../utils/enamFilter';
 
 type Props = {
   todos: Todo[];
-  filter: 'all' | 'active' | 'completed';
-  setFilter: (filter: 'all' | 'active' | 'completed') => void;
+  filter: Filter;
+  setFilter: (filter: Filter) => void;
   clearCompleted: () => void;
 };
 
@@ -34,9 +34,7 @@ export const Footer: React.FC<Props> = ({
               selected: filter === key.toLowerCase(),
             })}
             data-cy={`FilterLink${key}`}
-            onClick={() =>
-              setFilter(key.toLowerCase() as 'all' | 'active' | 'completed')
-            }
+            onClick={() => setFilter(key.toLowerCase() as Filter)}
           >
             {key}
           </a>

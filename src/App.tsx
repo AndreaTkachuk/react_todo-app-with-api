@@ -20,9 +20,7 @@ import { Filter } from './utils/enamFilter';
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>(
-    Filter.All,
-  );
+  const [filter, setFilter] = useState<Filter>(Filter.All);
   const [error, setError] = useState('');
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState<number | null>(null);
@@ -97,7 +95,7 @@ export const App: React.FC = () => {
       .finally(() => setLoading(0));
   };
 
-  function updateTodoTitle(id: number, value: string): Promise<void> | void {
+  const updateTodoTitle = (id: number, value: string): Promise<void> | void => {
     if (loading === id) {
       return;
     }
@@ -138,9 +136,9 @@ export const App: React.FC = () => {
         showError('Unable to update a todo');
         throw nextError;
       });
-  }
+  };
 
-  function deleteTodo(id: number): Promise<void> | void {
+  const deleteTodo = (id: number): Promise<void> | void => {
     setLoading(id);
 
     removeTodo(id)
@@ -152,7 +150,7 @@ export const App: React.FC = () => {
         showError('Unable to delete a todo');
         setLoading(0);
       });
-  }
+  };
 
   const clearCompleted = () => {
     const todosCompleted = todos.filter(todo => todo.completed);
